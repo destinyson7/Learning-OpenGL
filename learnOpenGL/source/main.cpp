@@ -1,12 +1,10 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-// #include <stb_image.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-// #include <learnopengl/filesystem.h>
 #include <shaders/shader_s.h>
 #include <camera.h>
 
@@ -27,7 +25,7 @@ float deltaTime = 0.0f; // time between current frame and last frame
 float lastFrame = 0.0f;
 
 glm::mat4 model = glm::mat4(1.0f);
-glm::vec3 translate_vec = glm::vec3(0.0f);
+glm::mat4 translate = glm::mat4(1.0f);
 
 int main()
 {
@@ -130,6 +128,9 @@ int main()
 
     glm::mat4 projection = glm::mat4(1.0f);
     projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+
+    glm::mat4 view = camera.GetViewMatrix();
+
     ourShader.use();
     ourShader.setMat4("projection", projection);
 
@@ -156,19 +157,14 @@ int main()
         // create transformations
 
         // make sure to initialize matrix to identity matrix first
-        model = glm::translate(model, translate_vec);
-        ourShader.setMat4("model", model);
-
-        glm::mat4 view = camera.GetViewMatrix();
-        ourShader.setMat4("view", view);
+        // model = glm::rotate(model, glm::radians(1.0f), glm::vec3(0, 1, 0));
+        view = camera.GetViewMatrix();
 
         // retrieve the matrix uniform locations
-        unsigned int modelLoc = glGetUniformLocation(ourShader.ID, "model");
-        unsigned int viewLoc = glGetUniformLocation(ourShader.ID, "view");
-        // pass them to the shaders (3 different ways)
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
-        // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
+        glm::mat4 MVP = projection * view * translate * model;
+        unsigned int MVPLoc = glGetUniformLocation(ourShader.ID, "MVP");
+
+        glUniformMatrix4fv(MVPLoc, 1, GL_FALSE, glm::value_ptr(MVP));
 
         // render box
         glBindVertexArray(VAO);
@@ -195,22 +191,22 @@ int main()
 void moveObject(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        model = glm::translate(model, glm::vec3(0, 1.0f * deltaTime, 0));
+        translate = glm::translate(translate, glm::vec3(0, 1.0f * deltaTime, 0));
 
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        model = glm::translate(model, glm::vec3(0, -1.0f * deltaTime, 0));
+        translate = glm::translate(translate, glm::vec3(0, -1.0f * deltaTime, 0));
 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        model = glm::translate(model, glm::vec3(-1.0f * deltaTime, 0, 0));
+        translate = glm::translate(translate, glm::vec3(-1.0f * deltaTime, 0, 0));
 
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        model = glm::translate(model, glm::vec3(1.0f * deltaTime, 0, 0));
+        translate = glm::translate(translate, glm::vec3(1.0f * deltaTime, 0, 0));
 
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-        model = glm::translate(model, glm::vec3(0, 0, 1.0f * deltaTime));
+        translate = glm::translate(translate, glm::vec3(0, 0, 1.0f * deltaTime));
 
     if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
-        model = glm::translate(model, glm::vec3(0, 0, -1.0f * deltaTime));
+        translate = glm::translate(translate, glm::vec3(0, 0, -1.0f * deltaTime));
 }
 
 void moveCamera(GLFWwindow *window)
@@ -228,6 +224,12 @@ void moveCamera(GLFWwindow *window)
     //     camera.ProcessKeyboard(RIGHT, deltaTime);
 }
 
+void spinObject(GLFWwindow *window)
+{
+    if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+        model = glm::rotate(model, glm::radians(1.0f), glm::vec3(0, 1, 0));
+}
+
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow *window)
@@ -237,6 +239,7 @@ void processInput(GLFWwindow *window)
 
     moveObject(window);
     moveCamera(window);
+    spinObject(window);
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
