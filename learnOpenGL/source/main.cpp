@@ -8,7 +8,6 @@
 
 // #include <learnopengl/filesystem.h>
 #include <shaders/shader_s.h>
-#include <camera.h>
 
 #include <iostream>
 
@@ -18,16 +17,6 @@ void processInput(GLFWwindow *window);
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
-
-// camera
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-
-// timing
-float deltaTime = 0.0f; // time between current frame and last frame
-float lastFrame = 0.0f;
-
-glm::mat4 model = glm::mat4(1.0f);
-glm::vec3 translate_vec = glm::vec3(0.0f);
 
 int main()
 {
@@ -74,42 +63,39 @@ int main()
     // ------------------------------------------------------------------
 
     float vertices[] = {
-        0.0f, 0.4f, 0.0f, 0.4137623926f, 0.7677182949f, 0.0026915627f,
-        -0.3f, 0.0f, -0.3f, 0.4137623926f, 0.7677182949f, 0.0026915627f,
-        0.1098076211f, 0.0f, -0.4098076211f, 0.4137623926f, 0.7677182949f, 0.0026915627f,
-        0.0f, 0.4f, 0.0f, 0.4896200473f, 0.1676612736f, 0.4429672735f,
-        0.1098076211f, 0.0f, -0.4098076211f, 0.4896200473f, 0.1676612736f, 0.4429672735f,
-        0.4098076211f, 0.0f, -0.1098076211f, 0.4896200473f, 0.1676612736f, 0.4429672735f,
-        0.0f, 0.4f, 0.0f, 0.7135420959f, 0.4870776437f, 0.009163385f,
-        0.4098076211f, 0.0f, -0.1098076211f, 0.7135420959f, 0.4870776437f, 0.009163385f,
-        0.3f, 0.0f, 0.3f, 0.7135420959f, 0.4870776437f, 0.009163385f,
-        0.0f, 0.4f, 0.0f, 0.7669461611f, 0.1447912111f, 0.3784481615f,
-        0.3f, 0.0f, 0.3f, 0.7669461611f, 0.1447912111f, 0.3784481615f,
-        -0.1098076211f, 0.0f, 0.4098076211f, 0.7669461611f, 0.1447912111f, 0.3784481615f,
-        0.0f, 0.4f, 0.0f, 0.2321058843f, 0.0893231443f, 0.8212044249f,
-        -0.1098076211f, 0.0f, 0.4098076211f, 0.2321058843f, 0.0893231443f, 0.8212044249f,
-        -0.4098076211f, 0.0f, 0.1098076211f, 0.2321058843f, 0.0893231443f, 0.8212044249f,
-        0.0f, 0.4f, 0.0f, 0.628434076f, 0.6623973755f, 0.0981678636f,
-        -0.4098076211f, 0.0f, 0.1098076211f, 0.628434076f, 0.6623973755f, 0.0981678636f,
-        -0.3f, 0.0f, -0.3f, 0.628434076f, 0.6623973755f, 0.0981678636f,
-        0.0f, -0.4f, 0.0f, 0.3930452327f, 0.1704100815f, 0.1118084155f,
-        -0.3f, 0.0f, -0.3f, 0.3930452327f, 0.1704100815f, 0.1118084155f,
-        0.1098076211f, 0.0f, -0.4098076211f, 0.3930452327f, 0.1704100815f, 0.1118084155f,
-        0.0f, -0.4f, 0.0f, 0.2015423091f, 0.8579473578f, 0.296699785f,
-        0.1098076211f, 0.0f, -0.4098076211f, 0.2015423091f, 0.8579473578f, 0.296699785f,
-        0.4098076211f, 0.0f, -0.1098076211f, 0.2015423091f, 0.8579473578f, 0.296699785f,
-        0.0f, -0.4f, 0.0f, 0.2245422345f, 0.3296623273f, 0.9089737724f,
-        0.4098076211f, 0.0f, -0.1098076211f, 0.2245422345f, 0.3296623273f, 0.9089737724f,
-        0.3f, 0.0f, 0.3f, 0.2245422345f, 0.3296623273f, 0.9089737724f,
-        0.0f, -0.4f, 0.0f, 0.2055296789f, 0.1924532933f, 0.6339205417f,
-        0.3f, 0.0f, 0.3f, 0.2055296789f, 0.1924532933f, 0.6339205417f,
-        -0.1098076211f, 0.0f, 0.4098076211f, 0.2055296789f, 0.1924532933f, 0.6339205417f,
-        0.0f, -0.4f, 0.0f, 0.1084795311f, 0.2213584152f, 0.0852229093f,
-        -0.1098076211f, 0.0f, 0.4098076211f, 0.1084795311f, 0.2213584152f, 0.0852229093f,
-        -0.4098076211f, 0.0f, 0.1098076211f, 0.1084795311f, 0.2213584152f, 0.0852229093f,
-        0.0f, -0.4f, 0.0f, 0.3697238863f, 0.7677923485f, 0.649349796f,
-        -0.4098076211f, 0.0f, 0.1098076211f, 0.3697238863f, 0.7677923485f, 0.649349796f,
-        -0.3f, 0.0f, -0.3f, 0.3697238863f, 0.7677923485f, 0.649349796f
+        0.0f, 0.0f, 0.5f, 0.647244066f, 0.8206990548f, 0.7488152685f,
+        -0.3f, -0.3f, 0.0f, 0.647244066f, 0.8206990548f, 0.7488152685f,
+        -0.0901838146f, -0.4145683051f, 0.0f, 0.647244066f, 0.8206990548f, 0.7488152685f,
+        0.0f, 0.0f, 0.5f, 0.233113241f, 0.8213544667f, 0.8384927377f,
+        -0.0901838146f, -0.4145683051f, 0.0f, 0.233113241f, 0.8213544667f, 0.8384927377f,
+        0.1482650947f, -0.3975141025f, 0.0f, 0.233113241f, 0.8213544667f, 0.8384927377f,
+        0.0f, 0.0f, 0.5f, 0.8822849974f, 0.2775745009f, 0.3165494291f,
+        0.1482650947f, -0.3975141025f, 0.0f, 0.8822849974f, 0.2775745009f, 0.3165494291f,
+        0.339640884f, -0.2542519811f, 0.0f, 0.8822849974f, 0.2775745009f, 0.3165494291f,
+        0.0f, 0.0f, 0.5f, 0.7375305647f, 0.4419038377f, 0.5358605815f,
+        0.339640884f, -0.2542519811f, 0.0f, 0.7375305647f, 0.4419038377f, 0.5358605815f,
+        0.4231830925f, -0.0302666521f, 0.0f, 0.7375305647f, 0.4419038377f, 0.5358605815f,
+        0.0f, 0.0f, 0.5f, 0.2680442634f, 0.2234442467f, 0.2938449037f,
+        0.4231830925f, -0.0302666521f, 0.0f, 0.2680442634f, 0.2234442467f, 0.2938449037f,
+        0.3723676591f, 0.203328125f, 0.0f, 0.2680442634f, 0.2234442467f, 0.2938449037f,
+        0.0f, 0.0f, 0.5f, 0.0340361008f, 0.1706504285f, 0.7884577258f,
+        0.3723676591f, 0.203328125f, 0.0f, 0.0340361008f, 0.1706504285f, 0.7884577258f,
+        0.203328125f, 0.3723676591f, 0.0f, 0.0340361008f, 0.1706504285f, 0.7884577258f,
+        0.0f, 0.0f, 0.5f, 0.1048857897f, 0.055636617f, 0.3964869888f,
+        0.203328125f, 0.3723676591f, 0.0f, 0.1048857897f, 0.055636617f, 0.3964869888f,
+        -0.0302666521f, 0.4231830925f, 0.0f, 0.1048857897f, 0.055636617f, 0.3964869888f,
+        0.0f, 0.0f, 0.5f, 0.4295926491f, 0.4858345552f, 0.9137123145f,
+        -0.0302666521f, 0.4231830925f, 0.0f, 0.4295926491f, 0.4858345552f, 0.9137123145f,
+        -0.2542519811f, 0.339640884f, 0.0f, 0.4295926491f, 0.4858345552f, 0.9137123145f,
+        0.0f, 0.0f, 0.5f, 0.5566548495f, 0.6336180953f, 0.4166151827f,
+        -0.2542519811f, 0.339640884f, 0.0f, 0.5566548495f, 0.6336180953f, 0.4166151827f,
+        -0.3975141025f, 0.1482650947f, 0.0f, 0.5566548495f, 0.6336180953f, 0.4166151827f,
+        0.0f, 0.0f, 0.5f, 0.425511578f, 0.8655573176f, 0.4756455043f,
+        -0.3975141025f, 0.1482650947f, 0.0f, 0.425511578f, 0.8655573176f, 0.4756455043f,
+        -0.4145683051f, -0.0901838146f, 0.0f, 0.425511578f, 0.8655573176f, 0.4756455043f,
+        0.0f, 0.0f, 0.5f, 0.4118820944f, 0.1537809429f, 0.2824519927f,
+        -0.4145683051f, -0.0901838146f, 0.0f, 0.4118820944f, 0.1537809429f, 0.2824519927f,
+        -0.3f, -0.3f, 0.0f, 0.4118820944f, 0.1537809429f, 0.2824519927f
 
     };
     unsigned int VBO, VAO;
@@ -124,23 +110,71 @@ int main()
     // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 6 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
-    // color coord attribute
+    // texture coord attribute
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
-    glm::mat4 projection = glm::mat4(1.0f);
-    projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    ourShader.use();
-    ourShader.setMat4("projection", projection);
+    // load and create a texture
+    // -------------------------
+    // unsigned int texture1, texture2;
+    // texture 1
+    // ---------
+    // glGenTextures(1, &texture1);
+    // glBindTexture(GL_TEXTURE_2D, texture1);
+    // set the texture wrapping parameters
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    // int width, height, nrChannels;
+    // stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+    // unsigned char *data = stbi_load(FileSystem::getPath("resources/textures/container.jpg").c_str(), &width, &height, &nrChannels, 0);
+    // if (data)
+    // {
+    //     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    //     glGenerateMipmap(GL_TEXTURE_2D);
+    // }
+    // else
+    // {
+    //     std::cout << "Failed to load texture" << std::endl;
+    // }
+    // stbi_image_free(data);
+    // texture 2
+    // ---------
+    // glGenTextures(1, &texture2);
+    // glBindTexture(GL_TEXTURE_2D, texture2);
+    // // set the texture wrapping parameters
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // // set texture filtering parameters
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // // load image, create texture and generate mipmaps
+    // data = stbi_load(FileSystem::getPath("resources/textures/awesomeface.png").c_str(), &width, &height, &nrChannels, 0);
+    // if (data)
+    // {
+    //     // note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
+    //     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    //     glGenerateMipmap(GL_TEXTURE_2D);
+    // }
+    // else
+    // {
+    //     std::cout << "Failed to load texture" << std::endl;
+    // }
+    // stbi_image_free(data);
+
+    // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
+    // -------------------------------------------------------------------------------------------
+    // ourShader.use();
+    // ourShader.setInt("texture1", 0);
+    // ourShader.setInt("texture2", 1);
 
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
     {
-        float currentFrame = glfwGetTime();
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
-
         // input
         // -----
         processInput(window);
@@ -150,18 +184,22 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
 
+        // bind textures on corresponding texture units
+        // glActiveTexture(GL_TEXTURE0);
+        // glBindTexture(GL_TEXTURE_2D, texture1);
+        // glActiveTexture(GL_TEXTURE1);
+        // glBindTexture(GL_TEXTURE_2D, texture2);
+
         // activate shader
         ourShader.use();
 
         // create transformations
-
-        // make sure to initialize matrix to identity matrix first
-        model = glm::translate(model, translate_vec);
-        ourShader.setMat4("model", model);
-
-        glm::mat4 view = camera.GetViewMatrix();
-        ourShader.setMat4("view", view);
-
+        glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+        glm::mat4 view = glm::mat4(1.0f);
+        glm::mat4 projection = glm::mat4(1.0f);
+        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         // retrieve the matrix uniform locations
         unsigned int modelLoc = glGetUniformLocation(ourShader.ID, "model");
         unsigned int viewLoc = glGetUniformLocation(ourShader.ID, "view");
@@ -169,11 +207,12 @@ int main()
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
         // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
+        ourShader.setMat4("projection", projection);
 
         // render box
         glBindVertexArray(VAO);
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glDrawArrays(GL_TRIANGLES, 0, 33);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -192,51 +231,12 @@ int main()
     return 0;
 }
 
-void moveObject(GLFWwindow *window)
-{
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        model = glm::translate(model, glm::vec3(0, 1.0f * deltaTime, 0));
-
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        model = glm::translate(model, glm::vec3(0, -1.0f * deltaTime, 0));
-
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        model = glm::translate(model, glm::vec3(-1.0f * deltaTime, 0, 0));
-
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        model = glm::translate(model, glm::vec3(1.0f * deltaTime, 0, 0));
-
-    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-        model = glm::translate(model, glm::vec3(0, 0, 1.0f * deltaTime));
-
-    if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
-        model = glm::translate(model, glm::vec3(0, 0, -1.0f * deltaTime));
-}
-
-void moveCamera(GLFWwindow *window)
-{
-    // if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
-    //     camera.ProcessKeyboard(FORWARD, deltaTime);
-
-    // if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
-    //     camera.ProcessKeyboard(BACKWARD, deltaTime);
-
-    // if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
-    //     camera.ProcessKeyboard(LEFT, deltaTime);
-
-    // if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
-    //     camera.ProcessKeyboard(RIGHT, deltaTime);
-}
-
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-
-    moveObject(window);
-    moveCamera(window);
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

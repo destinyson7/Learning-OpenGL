@@ -6,5 +6,5 @@ C_DEFINES = -D_GLFW_USE_CONFIG_H
 
 C_INCLUDES = -I"/Users/tanish/Documents/Computer Graphics/assignments/0/learnOpenGL/libraries/glfw/include" -I"/Users/tanish/Documents/Computer Graphics/assignments/0/learnOpenGL/libraries/glfw/src" -I"/Users/tanish/Documents/Computer Graphics/assignments/0/learnOpenGL/build/libraries/glfw/src"
 
-C_FLAGS =  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk -fPIC -Wall -std=c99
+C_FLAGS =  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.0.sdk -fPIC -Wall -std=c99
 

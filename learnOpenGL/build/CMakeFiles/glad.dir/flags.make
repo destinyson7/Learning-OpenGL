@@ -6,5 +6,5 @@ C_DEFINES =
 
 C_INCLUDES = -I"/Users/tanish/Documents/Computer Graphics/assignments/0/learnOpenGL/libraries/glad/include"
 
-C_FLAGS =  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk
+C_FLAGS =  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.0.sdk
 

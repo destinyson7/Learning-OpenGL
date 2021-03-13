@@ -6,5 +6,5 @@ CXX_DEFINES = -DGLFW_INCLUDE_NONE
 
 CXX_INCLUDES = -I"/Users/tanish/Documents/Computer Graphics/assignments/0/learnOpenGL/source" -I"/Users/tanish/Documents/Computer Graphics/assignments/0/learnOpenGL/libraries/glfw/include" -I"/Users/tanish/Documents/Computer Graphics/assignments/0/learnOpenGL/libraries/glad/include" -I"/Users/tanish/Documents/Computer Graphics/assignments/0/learnOpenGL/libraries/glm" -isystem /usr/local/include
 
-CXX_FLAGS =  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks  -std=gnu++11
+CXX_FLAGS =  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.0.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks  -std=gnu++11
 
