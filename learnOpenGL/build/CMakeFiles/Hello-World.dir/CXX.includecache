@@ -78,6 +78,16 @@ GL/gl.h
 GL/glext.h
 -
 
+../source/camera.h
+glad/glad.h
+-
+glm/glm.hpp
+-
+glm/gtc/matrix_transform.hpp
+-
+vector
+-
+
 ../source/shaders/shader_s.h
 glad/glad.h
 -
@@ -104,6 +114,8 @@ glm/gtc/matrix_transform.hpp
 glm/gtc/type_ptr.hpp
 -
 shaders/shader_s.h
+-
+camera.h
 -
 iostream
 -

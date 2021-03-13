@@ -5,6 +5,7 @@ CMakeFiles/Hello-World.dir/source/main.cpp.o
  ../libraries/glad/include/KHR/khrplatform.h
  ../libraries/glad/include/glad/glad.h
  ../libraries/glfw/include/GLFW/glfw3.h
+ ../source/camera.h
  ../source/shaders/shader_s.h
  /Users/tanish/Documents/Computer Graphics/assignments/0/learnOpenGL/source/main.cpp
  /usr/local/include/glm/common.hpp
