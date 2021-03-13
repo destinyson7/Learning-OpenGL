@@ -211,23 +211,35 @@ void moveObject(GLFWwindow *window)
 
 void moveCamera(GLFWwindow *window)
 {
-    // if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
-    //     camera.ProcessKeyboard(FORWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
+        camera.ProcessKeyboard(FORWARD, deltaTime);
 
-    // if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
-    //     camera.ProcessKeyboard(BACKWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+        camera.ProcessKeyboard(BACKWARD, deltaTime);
 
-    // if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
-    //     camera.ProcessKeyboard(LEFT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
+        camera.ProcessKeyboard(LEFT, deltaTime);
 
-    // if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
-    //     camera.ProcessKeyboard(RIGHT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
+        camera.ProcessKeyboard(RIGHT, deltaTime);
+
+    if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
+        camera.ProcessKeyboard(UP, deltaTime);
+
+    if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
+        camera.ProcessKeyboard(DOWN, deltaTime);
 }
 
 void spinObject(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+        model = glm::rotate(model, glm::radians(1.0f), glm::vec3(1, 0, 0));
+
+    if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
         model = glm::rotate(model, glm::radians(1.0f), glm::vec3(0, 1, 0));
+
+    if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
+        model = glm::rotate(model, glm::radians(1.0f), glm::vec3(0, 0, 1));
 }
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
