@@ -143,7 +143,7 @@ int main()
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        view = camera.GetViewMatrix();
+
 
         // input
         // -----
@@ -162,7 +162,7 @@ int main()
         // make sure to initialize matrix to identity matrix first
         // model = glm::rotate(model, glm::radians(1.0f), glm::vec3(0, 1, 0));
 
-
+        view = camera.GetViewMatrix();
         // retrieve the matrix uniform locations
         glm::mat4 MVP = projection * view * translate * model;
         unsigned int MVPLoc = glGetUniformLocation(ourShader.ID, "MVP");
@@ -233,6 +233,34 @@ void moveCamera(GLFWwindow *window)
         camera.ProcessKeyboard(BACKWARD, deltaTime);
 }
 
+void teleportCamera(GLFWwindow *window)
+{
+    if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+    {
+        glm::vec3 objectPosition = glm::vec3(translate[3][0], translate[3][1], translate[3][2]);
+        glm::vec3 fixedPosition = glm::vec3(0.0f, 0.0f, 3.0f);
+
+        camera.teleportCamera(objectPosition, fixedPosition);
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
+    {
+        glm::vec3 objectPosition = glm::vec3(translate[3][0], translate[3][1], translate[3][2]);
+        glm::vec3 fixedPosition = glm::vec3(0.0f, 0.0f, -3.0f);
+
+        camera.teleportCamera(objectPosition, fixedPosition);
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
+    {
+        glm::vec3 objectPosition = glm::vec3(translate[3][0], translate[3][1], translate[3][2]);
+        glm::vec3 fixedPosition = glm::vec3(3.0f, 0.0f, 3.0f);
+
+        camera.teleportCamera(objectPosition, fixedPosition);
+    }
+
+}
+
 void spinObject(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
@@ -264,6 +292,7 @@ void processInput(GLFWwindow *window)
 
     moveObject(window);
     moveCamera(window);
+    teleportCamera(window);
     spinObject(window);
     spinCamera(window);
 }

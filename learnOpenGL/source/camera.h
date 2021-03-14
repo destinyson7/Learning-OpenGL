@@ -66,6 +66,12 @@ public:
 		return glm::lookAt(Position, Position + Front, Up);
 	}
 
+	void teleportCamera(glm::vec3 objectPosition, glm::vec3 fixedPosition)
+	{
+		Position = fixedPosition;
+		Front = objectPosition - fixedPosition;
+	}
+
 	// processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
 	void ProcessKeyboard(Camera_Movement direction, float deltaTime)
 	{
@@ -90,7 +96,7 @@ public:
 			float camX = sin(glfwGetTime()) * radius;
 			float camZ = cos(glfwGetTime()) * radius;
 			Position = glm::vec3(camX, 0.0, camZ);
-			Front = glm::normalize(glm::vec3(0.0, 0.0, 0.0) - Position);
+			Front = glm::vec3(0.0, 0.0, 0.0) - Position;
 		}
 	}
 
