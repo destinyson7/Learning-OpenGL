@@ -26,6 +26,7 @@ float lastFrame = 0.0f;
 
 glm::mat4 model = glm::mat4(1.0f);
 glm::mat4 translate = glm::mat4(1.0f);
+glm::mat4 view = glm::mat4(1.0f);
 
 int main()
 {
@@ -129,7 +130,7 @@ int main()
     glm::mat4 projection = glm::mat4(1.0f);
     projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
-    glm::mat4 view = camera.GetViewMatrix();
+    view = camera.GetViewMatrix();
 
     ourShader.use();
     ourShader.setMat4("projection", projection);
@@ -141,6 +142,8 @@ int main()
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+
+        view = camera.GetViewMatrix();
 
         // input
         // -----
@@ -158,7 +161,7 @@ int main()
 
         // make sure to initialize matrix to identity matrix first
         // model = glm::rotate(model, glm::radians(1.0f), glm::vec3(0, 1, 0));
-        view = camera.GetViewMatrix();
+
 
         // retrieve the matrix uniform locations
         glm::mat4 MVP = projection * view * translate * model;
@@ -211,11 +214,11 @@ void moveObject(GLFWwindow *window)
 
 void moveCamera(GLFWwindow *window)
 {
-    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
-        camera.ProcessKeyboard(FORWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
+        camera.ProcessKeyboard(UP, deltaTime);
 
-    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
-        camera.ProcessKeyboard(BACKWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
+        camera.ProcessKeyboard(DOWN, deltaTime);
 
     if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
         camera.ProcessKeyboard(LEFT, deltaTime);
@@ -223,11 +226,11 @@ void moveCamera(GLFWwindow *window)
     if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
 
-    if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
-        camera.ProcessKeyboard(UP, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
+        camera.ProcessKeyboard(FORWARD, deltaTime);
 
-    if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
-        camera.ProcessKeyboard(DOWN, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+        camera.ProcessKeyboard(BACKWARD, deltaTime);
 }
 
 void spinObject(GLFWwindow *window)
@@ -242,6 +245,16 @@ void spinObject(GLFWwindow *window)
         model = glm::rotate(model, glm::radians(1.0f), glm::vec3(0, 0, 1));
 }
 
+void spinCamera(GLFWwindow *window)
+{
+    if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS)
+    {
+        model = glm::mat4(1.0f);
+        translate = glm::mat4(1.0f);
+        camera.ProcessKeyboard(SPIN, deltaTime);
+    }
+}
+
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow *window)
@@ -252,6 +265,7 @@ void processInput(GLFWwindow *window)
     moveObject(window);
     moveCamera(window);
     spinObject(window);
+    spinCamera(window);
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

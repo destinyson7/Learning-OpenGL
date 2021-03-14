@@ -15,7 +15,8 @@ enum Camera_Movement
 	LEFT,
 	RIGHT,
 	UP,
-	DOWN
+	DOWN,
+	SPIN
 };
 
 // Default camera values
@@ -81,6 +82,16 @@ public:
 			Position += Up * velocity;
 		if (direction == DOWN)
 			Position -= Up * velocity;
+
+		if (direction == SPIN)
+		{
+			const float radius = glm::length(Position);
+			// const float radius = 1.0f;
+			float camX = sin(glfwGetTime()) * radius;
+			float camZ = cos(glfwGetTime()) * radius;
+			Position = glm::vec3(camX, 0.0, camZ);
+			Front = glm::normalize(glm::vec3(0.0, 0.0, 0.0) - Position);
+		}
 	}
 
 private:
