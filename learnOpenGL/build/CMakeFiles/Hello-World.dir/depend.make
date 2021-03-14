@@ -5,7 +5,7 @@ CMakeFiles/Hello-World.dir/source/main.cpp.o: ../libraries/glad/include/KHR/khrp
 CMakeFiles/Hello-World.dir/source/main.cpp.o: ../libraries/glad/include/glad/glad.h
 CMakeFiles/Hello-World.dir/source/main.cpp.o: ../libraries/glfw/include/GLFW/glfw3.h
 CMakeFiles/Hello-World.dir/source/main.cpp.o: ../source/camera.h
-CMakeFiles/Hello-World.dir/source/main.cpp.o: ../source/shaders/shader_s.h
+CMakeFiles/Hello-World.dir/source/main.cpp.o: ../source/shader.h
 CMakeFiles/Hello-World.dir/source/main.cpp.o: ../source/main.cpp
 CMakeFiles/Hello-World.dir/source/main.cpp.o: /usr/local/include/glm/common.hpp
 CMakeFiles/Hello-World.dir/source/main.cpp.o: /usr/local/include/glm/detail/_fixes.hpp

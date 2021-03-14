@@ -91,11 +91,14 @@ public:
 
 		if (direction == SPIN)
 		{
-			const float radius = glm::length(Position);
-			// const float radius = 1.0f;
-			float camX = sin(glfwGetTime()) * radius;
-			float camZ = cos(glfwGetTime()) * radius;
-			Position = glm::vec3(camX, 0.0, camZ);
+			float rotateTemp[] = {
+				cos(glm::radians(1.0f)), 0, -sin(glm::radians(1.0f)),
+				0, 1, 0,
+				sin(glm::radians(1.0f)), 0, cos(glm::radians(1.0f))
+			};
+			glm::mat3 rotateMat = glm::make_mat3(rotateTemp);
+
+			Position = rotateMat * Position;
 			Front = glm::vec3(0.0, 0.0, 0.0) - Position;
 		}
 	}

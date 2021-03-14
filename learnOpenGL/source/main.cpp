@@ -5,7 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <shaders/shader_s.h>
+#include <shader.h>
 #include <camera.h>
 
 #include <iostream>
@@ -28,7 +28,7 @@ glm::mat4 model = glm::mat4(1.0f);
 glm::mat4 translate = glm::mat4(1.0f);
 glm::mat4 view = glm::mat4(1.0f);
 
-int main()
+int main(int argc, char *argv[])
 {
     // glfw: initialize and configure
     // ------------------------------
@@ -67,10 +67,12 @@ int main()
 
     // build and compile our shader zprogram
     // ------------------------------------
-    Shader ourShader("./../source/shaders/3.3.shader.vs", "./../source/shaders/3.3.shader.fs");
+    Shader ourShader("./../source/shaders/shader.vert", "./../source/shaders/shader.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
+
+    assert(argc == 1);
 
     float vertices[] = {
         0.0f, 0.4f, 0.0f, 0.4137623926f, 0.7677182949f, 0.0026915627f,

@@ -88,7 +88,7 @@ glm/gtc/matrix_transform.hpp
 vector
 -
 
-../source/shaders/shader_s.h
+../source/shader.h
 glad/glad.h
 -
 glm/glm.hpp
@@ -113,7 +113,7 @@ glm/gtc/matrix_transform.hpp
 -
 glm/gtc/type_ptr.hpp
 -
-shaders/shader_s.h
+shader.h
 -
 camera.h
 -
