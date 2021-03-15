@@ -20,18 +20,19 @@ for i in range(1, 11):
 
 vertices.append(centre)
 
-print(len(vertices))
+# print(len(vertices))
+print(33)
 
 for i in range(11):
 
-    color = str(round(np.random.random(), 10)) + "f, " + str(round(np.random.random(),
-                                                                   10)) + "f, " + str(round(np.random.random(), 10)) + "f, "
+    color = str(round(np.random.random(), 10)) + " " + str(round(np.random.random(),
+                                                                 10)) + " " + str(round(np.random.random(), 10)) + " "
 
     print(
-        f'{round(vertices[11][0], 10)}f, {round(vertices[11][1], 10)}f, {round(vertices[11][2], 10)}f, {color}')
+        f'{round(vertices[11][0], 10)} {round(vertices[11][2], 10)} {round(vertices[11][1], 10)} {color}')
 
     print(
-        f'{round(vertices[i][0], 10)}f, {round(vertices[i][1], 10)}f, {round(vertices[i][2], 10)}f, {color}')
+        f'{round(vertices[i][0], 10)} {round(vertices[i][2], 10)} {round(vertices[i][1], 10)} {color}')
 
     print(
-        f'{round(vertices[(i+1)%11][0], 10)}f, {round(vertices[(i+1)%11][1], 10)}f, {round(vertices[(i+1)%11][2], 10)}f, {color}')
+        f'{round(vertices[(i+1)%11][0], 10)} {round(vertices[(i+1)%11][2], 10)} {round(vertices[(i+1)%11][1], 10)} {color}')
