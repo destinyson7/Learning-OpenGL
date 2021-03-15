@@ -9,9 +9,11 @@
 #include <camera.h>
 
 #include <iostream>
+using namespace std;
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
+int input();
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -28,7 +30,7 @@ glm::mat4 model = glm::mat4(1.0f);
 glm::mat4 translate = glm::mat4(1.0f);
 glm::mat4 view = glm::mat4(1.0f);
 
-int main(int argc, char *argv[])
+int main()
 {
     // glfw: initialize and configure
     // ------------------------------
@@ -72,7 +74,9 @@ int main(int argc, char *argv[])
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
 
-    assert(argc == 1);
+    int shape_id = input();
+
+    cout << "Shape ID selected is: " << shape_id << endl;
 
     float vertices[] = {
         0.0f, 0.4f, 0.0f, 0.4137623926f, 0.7677182949f, 0.0026915627f,
@@ -193,6 +197,20 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+int input()
+{
+    int shape_id;
+
+    cout << "Please choose one of the following:\n"
+         << "Enter 1 for Decagonal Prism\n"
+         << "Enter 2 for Hexagonal Dipyramid\n"
+         << "Enter 3 for Undecagonal Pyramid\n";
+
+    cin >> shape_id;
+
+    return shape_id;
+}
+
 void moveObject(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
@@ -260,7 +278,6 @@ void teleportCamera(GLFWwindow *window)
 
         camera.teleportCamera(objectPosition, fixedPosition);
     }
-
 }
 
 void spinObject(GLFWwindow *window)
