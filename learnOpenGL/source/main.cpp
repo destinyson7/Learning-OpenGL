@@ -32,6 +32,46 @@ glm::mat4 view = glm::mat4(1.0f);
 
 int main()
 {
+    int shape_id = input();
+    string file;
+
+    // cout << "Shape ID selected is: " << shape_id << endl;
+
+    if(shape_id == 1)
+    {
+        file = "../source/shapes/decagonal_prism.txt";
+    }
+
+    else if(shape_id == 2)
+    {
+        file = "../source/shapes/hexagonal_dipyramid.txt";
+    }
+
+    else if(shape_id == 3)
+    {
+        file = "../source/undecagonal_pyramid.txt";
+    }
+
+    else
+    {
+        assert(false);
+    }
+
+    std::fstream in;
+    in.open(file);
+
+    int N_VERTICES;
+    in >> N_VERTICES;
+
+    float vertices[N_VERTICES * 6];
+
+    for(int i = 0; i < N_VERTICES * 6; i++)
+    {
+        in >> vertices[i];
+    }
+
+    in.close();
+
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -74,47 +114,6 @@ int main()
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
 
-    int shape_id = input();
-    string file;
-
-    // cout << "Shape ID selected is: " << shape_id << endl;
-
-    if(shape_id == 1)
-    {
-        file = "../source/shapes/decagonal_prism.txt";
-    }
-
-    else if(shape_id == 2)
-    {
-        file = "../source/shapes/hexagonal_dipyramid.txt";
-    }
-
-    else if(shape_id == 3)
-    {
-        file = "../source/shapes/undecagonal_pyramid.txt";
-    }
-
-    else
-    {
-        assert(false);
-    }
-
-    std::fstream in;
-    in.open(file);
-
-    int N_TRIANGLES;
-    in >> N_TRIANGLES;
-
-    float vertices[N_TRIANGLES * 6];
-
-    for(int i = 0; i < N_TRIANGLES * 6; i++)
-    {
-        in >> vertices[i];
-    }
-
-    in.close();
-
-
     // float vertices[] = {
     //     0.0f, 0.4f, 0.0f, 0.4137623926f, 0.7677182949f, 0.0026915627f,
     //     -0.3f, 0.0f, -0.3f, 0.4137623926f, 0.7677182949f, 0.0026915627f,
@@ -154,6 +153,7 @@ int main()
     //     -0.3f, 0.0f, -0.3f, 0.3697238863f, 0.7677923485f, 0.649349796f
 
     // };
+
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -215,7 +215,7 @@ int main()
         // render box
         glBindVertexArray(VAO);
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glDrawArrays(GL_TRIANGLES, 0, N_TRIANGLES);
+        glDrawArrays(GL_TRIANGLES, 0, N_VERTICES);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
