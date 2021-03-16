@@ -15,15 +15,12 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
 int input();
 
-// settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-// camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
-// timing
-float deltaTime = 0.0f; // time between current frame and last frame
+float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 glm::mat4 model = glm::mat4(1.0f);
@@ -37,19 +34,19 @@ int main()
 
     // cout << "Shape ID selected is: " << shape_id << endl;
 
-    if(shape_id == 1)
+    if (shape_id == 1)
     {
         file = "../source/shapes/decagonal_prism.txt";
     }
 
-    else if(shape_id == 2)
+    else if (shape_id == 2)
     {
         file = "../source/shapes/hexagonal_dipyramid.txt";
     }
 
-    else if(shape_id == 3)
+    else if (shape_id == 3)
     {
-        file = "../source/undecagonal_pyramid.txt";
+        file = "../source/shapes/undecagonal_pyramid.txt";
     }
 
     else
@@ -65,15 +62,13 @@ int main()
 
     float vertices[N_VERTICES * 6];
 
-    for(int i = 0; i < N_VERTICES * 6; i++)
+    for (int i = 0; i < N_VERTICES * 6; i++)
     {
         in >> vertices[i];
     }
 
     in.close();
 
-    // glfw: initialize and configure
-    // ------------------------------
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -83,8 +78,6 @@ int main()
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-    // glfw window creation
-    // --------------------
     GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
     if (window == NULL)
     {
@@ -95,24 +88,15 @@ int main()
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    // glad: load all OpenGL function pointers
-    // ---------------------------------------
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
 
-    // configure global opengl state
-    // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
-    // build and compile our shader zprogram
-    // ------------------------------------
     Shader ourShader("./../source/shaders/shader.vert", "./../source/shaders/shader.frag");
-
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-    // ------------------------------------------------------------------
 
     // float vertices[] = {
     //     0.0f, 0.4f, 0.0f, 0.4137623926f, 0.7677182949f, 0.0026915627f,
@@ -163,10 +147,9 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 6 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
-    // color coord attribute
+
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
@@ -178,58 +161,38 @@ int main()
     ourShader.use();
     ourShader.setMat4("projection", projection);
 
-    // render loop
-    // -----------
     while (!glfwWindowShouldClose(window))
     {
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-
-
-        // input
-        // -----
         processInput(window);
 
-        // render
-        // ------
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
 
-        // activate shader
         ourShader.use();
 
-        // create transformations
-
-        // make sure to initialize matrix to identity matrix first
-        // model = glm::rotate(model, glm::radians(1.0f), glm::vec3(0, 1, 0));
-
         view = camera.GetViewMatrix();
-        // retrieve the matrix uniform locations
+
         glm::mat4 MVP = projection * view * translate * model;
         unsigned int MVPLoc = glGetUniformLocation(ourShader.ID, "MVP");
 
         glUniformMatrix4fv(MVPLoc, 1, GL_FALSE, glm::value_ptr(MVP));
 
-        // render box
         glBindVertexArray(VAO);
+
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawArrays(GL_TRIANGLES, 0, N_VERTICES);
 
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-        // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
-    // optional: de-allocate all resources once they've outlived their purpose:
-    // ------------------------------------------------------------------------
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
 
-    // glfw: terminate, clearing all previously allocated GLFW resources.
-    // ------------------------------------------------------------------
     glfwTerminate();
     return 0;
 }
@@ -339,8 +302,6 @@ void spinCamera(GLFWwindow *window)
     }
 }
 
-// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-// ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -353,11 +314,7 @@ void processInput(GLFWwindow *window)
     spinCamera(window);
 }
 
-// glfw: whenever the window size changed (by OS or user resize) this callback function executes
-// ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow *window, int width, int height)
 {
-    // make sure the viewport matches the new window dimensions; note that width and
-    // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
 }
