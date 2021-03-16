@@ -1,0 +1,9 @@
+/Users/tanish/Documents/Computer Graphics/assignments/0/bonus/build/CMakeFiles/rebuild_cache.dir
+/Users/tanish/Documents/Computer Graphics/assignments/0/bonus/build/CMakeFiles/edit_cache.dir
+/Users/tanish/Documents/Computer Graphics/assignments/0/bonus/build/CMakeFiles/glad.dir
+/Users/tanish/Documents/Computer Graphics/assignments/0/bonus/build/CMakeFiles/assignment-0-bonus.dir
+/Users/tanish/Documents/Computer Graphics/assignments/0/bonus/build/libraries/glfw/CMakeFiles/rebuild_cache.dir
+/Users/tanish/Documents/Computer Graphics/assignments/0/bonus/build/libraries/glfw/CMakeFiles/edit_cache.dir
+/Users/tanish/Documents/Computer Graphics/assignments/0/bonus/build/libraries/glfw/src/CMakeFiles/rebuild_cache.dir
+/Users/tanish/Documents/Computer Graphics/assignments/0/bonus/build/libraries/glfw/src/CMakeFiles/edit_cache.dir
+/Users/tanish/Documents/Computer Graphics/assignments/0/bonus/build/libraries/glfw/src/CMakeFiles/glfw.dir

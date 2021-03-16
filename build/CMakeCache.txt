@@ -197,7 +197,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=Hello-World
+CMAKE_PROJECT_NAME:STATIC=assignment-0
 
 //Value Computed by CMake
 CMAKE_PROJECT_VERSION:STATIC=3.4.0
@@ -291,14 +291,14 @@ GLFW_USE_OSMESA:BOOL=OFF
 //Assume the Vulkan loader is linked with the application
 GLFW_VULKAN_STATIC:BOOL=OFF
 
-//Value Computed by CMake
-Hello-World_BINARY_DIR:STATIC=/Users/tanish/Documents/Computer Graphics/assignments/0/build
-
-//Value Computed by CMake
-Hello-World_SOURCE_DIR:STATIC=/Users/tanish/Documents/Computer Graphics/assignments/0
-
 //pkg-config executable
 PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/local/bin/pkg-config
+
+//Value Computed by CMake
+assignment-0_BINARY_DIR:STATIC=/Users/tanish/Documents/Computer Graphics/assignments/0/build
+
+//Value Computed by CMake
+assignment-0_SOURCE_DIR:STATIC=/Users/tanish/Documents/Computer Graphics/assignments/0
 
 
 ########################

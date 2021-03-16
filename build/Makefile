@@ -143,17 +143,17 @@ glad/fast:
 .PHONY : glad/fast
 
 #=============================================================================
-# Target rules for targets named Hello-World
+# Target rules for targets named assignment-0
 
 # Build rule for target.
-Hello-World: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Hello-World
-.PHONY : Hello-World
+assignment-0: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 assignment-0
+.PHONY : assignment-0
 
 # fast build rule for target.
-Hello-World/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hello-World.dir/build.make CMakeFiles/Hello-World.dir/build
-.PHONY : Hello-World/fast
+assignment-0/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/assignment-0.dir/build.make CMakeFiles/assignment-0.dir/build
+.PHONY : assignment-0/fast
 
 #=============================================================================
 # Target rules for targets named glfw
@@ -201,7 +201,7 @@ source/main.o: source/main.cpp.o
 
 # target to build an object file
 source/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hello-World.dir/build.make CMakeFiles/Hello-World.dir/source/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/assignment-0.dir/build.make CMakeFiles/assignment-0.dir/source/main.cpp.o
 .PHONY : source/main.cpp.o
 
 source/main.i: source/main.cpp.i
@@ -210,7 +210,7 @@ source/main.i: source/main.cpp.i
 
 # target to preprocess a source file
 source/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hello-World.dir/build.make CMakeFiles/Hello-World.dir/source/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/assignment-0.dir/build.make CMakeFiles/assignment-0.dir/source/main.cpp.i
 .PHONY : source/main.cpp.i
 
 source/main.s: source/main.cpp.s
@@ -219,7 +219,7 @@ source/main.s: source/main.cpp.s
 
 # target to generate assembly for a file
 source/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Hello-World.dir/build.make CMakeFiles/Hello-World.dir/source/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/assignment-0.dir/build.make CMakeFiles/assignment-0.dir/source/main.cpp.s
 .PHONY : source/main.cpp.s
 
 # Help Target
@@ -230,7 +230,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... Hello-World"
+	@echo "... assignment-0"
 	@echo "... glad"
 	@echo "... glfw"
 	@echo "... libraries/glad/src/glad.o"
